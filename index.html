@@ -1,0 +1,36 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drag n Drop</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+    <body>
+        <ul id="tobedone" class="tobedone">
+            To Be Done
+            <div id="containerForToBeDone"> </div>
+            <div class="addbutton" id="addItemButton1" onclick="addItem(1)"> + </div>
+        </ul>
+
+        <ul id="inprogress" class="inprogress">
+            In Progress
+            <div id="containerForInprogress"> </div>
+            <div class="addbutton" id="addItemButton2" onclick="addItem(2)"> + </div>
+        </ul>
+
+        <ul id="completed" class="completed">
+            Completed<div id="containerForCompleted"> </div>
+            <div class="addbutton" id="addItemButton3" onclick="addItem(3)"> + </div>
+        </ul>
+
+        <ul id="extra" class="extra">
+            Extra
+            <div id="containerForExtra"> </div>
+            <div class="addbutton" id="addItemButton4" onclick="addItem(4)"> + </div>
+        </ul>
+
+        <script src="script.js"></script>
+    </body>
+</html>
