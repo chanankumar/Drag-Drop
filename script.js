@@ -7,27 +7,27 @@ let extra = [];
 function updateLocalStorage (listToBeUpdated) {
     switch(listToBeUpdated) {
         case 'ToBeDone' : 
-            if(toBeDoneArray.length === 0 ){
-                return
-            }
+            // if(toBeDoneArray.length === 0 ){
+            //     return
+            // }
             localStorage.setItem('ToBeDone',JSON.stringify(toBeDoneArray));
             break;
         case 'InProgress' :
-            if(inProgress.length === 0 ){
-                return
-            } 
+            // if(inProgress.length === 0 ){
+            //     return
+            // } 
             localStorage.setItem('InProgress',JSON.stringify(inProgress));
             break;
         case 'Completed' : 
-            if(completed.length === 0 ){
-                return
-            }
+            // if(completed.length === 0 ){
+            //     return
+            // }
             localStorage.setItem('Completed',JSON.stringify(completed));
             break;
         case 'Extra' : 
-            if(extra.length === 0 ){
-                return
-            }
+            // if(extra.length === 0 ){
+            //     return
+            // }
             localStorage.setItem('Extra',JSON.stringify(extra));
             break;
     }
@@ -276,21 +276,25 @@ function deleteParticularItem(index,listName) {
     switch(listName) { 
         case 'ToBeDone' : 
             toBeDoneArray.splice(index, 1);
+            updateLocalStorage('ToBeDone')
             renderDomOnLoad('ToBeDone');
         break
 
         case 'InProgress' : 
             inProgress.splice(index,1);
+            updateLocalStorage('InProgress');
             renderDomOnLoad('InProgress');
         break
     
         case 'Completed' : 
             completed.splice(index, 1);
+            updateLocalStorage('Completed');
             renderDomOnLoad('Completed');
         break
 
         case 'Extra' : 
             extra.splice(index,1);
+            updateLocalStorage('Extra');
             renderDomOnLoad('Extra');
         break
 
