@@ -89,6 +89,7 @@ function renderDomOnLoad (listToBeUpdated) {
                     var item = document.createElement("span");
                     item.innerHTML = value;
                     item.contentEditable = true;
+                    item.addEventListener("focusout", (event) => itemUpdated(index,'ToBeDone',event));
                     var deleteIcon = document.createElement("span");
                     deleteIcon.innerHTML = " X ";
                     deleteIcon.contentEditable = false;
@@ -118,6 +119,7 @@ function renderDomOnLoad (listToBeUpdated) {
                     var item = document.createElement("span");
                     item.innerHTML = value;
                     item.contentEditable = true;
+                    item.addEventListener("focusout", (event) => itemUpdated(index,'Inprogress',event));
                     var deleteIcon = document.createElement("span");
                     deleteIcon.innerHTML = " X ";
                     deleteIcon.contentEditable = false;
@@ -147,6 +149,7 @@ function renderDomOnLoad (listToBeUpdated) {
                 var item = document.createElement("span");
                 item.innerHTML = value;
                 item.contentEditable = true;
+                item.addEventListener("focusout", (event) => itemUpdated(index,'Completed',event));
                 var deleteIcon = document.createElement("span");
                 deleteIcon.innerHTML = " X ";
                 deleteIcon.contentEditable = false;
@@ -168,7 +171,7 @@ function renderDomOnLoad (listToBeUpdated) {
                     value.remove();
                 });
             }
-            if(completed.length !== 0) {
+            if(extra.length !== 0) {
                 extra.forEach( (value,index) => {
                     var containerForItem = document.createElement('div');
                     containerForItem.classList.add('containerForExtra');
@@ -176,6 +179,7 @@ function renderDomOnLoad (listToBeUpdated) {
                     var item = document.createElement("span");
                     item.innerHTML = value;
                     item.contentEditable = true;
+                    item.addEventListener("focusout", (event) => itemUpdated(index,'Extra',event));
                     var deleteIcon = document.createElement("span");
                     deleteIcon.innerHTML = " X ";
                     deleteIcon.contentEditable = false;
@@ -249,27 +253,32 @@ function addItemToList(index,evt)  {
             toBeDoneArray.push(valueToAppend);
             updateLocalStorage('ToBeDone')
             renderDomOnLoad('ToBeDone');
+            closeAddValue(1);
         break;
 
         case 2 : 
             inProgress.push(valueToAppend);
             updateLocalStorage('InProgress')
             renderDomOnLoad('InProgress');
+            closeAddValue(2);
         break;
 
         case 3 : 
             completed.push(valueToAppend);
             updateLocalStorage('Completed')
             renderDomOnLoad('Completed');
+            closeAddValue(3);
         break;
 
         case 4 : 
             extra.push(valueToAppend);
             updateLocalStorage('Extra')
             renderDomOnLoad('Extra');
+            closeAddValue(4);
         break;
 
     }
+
 }
 
 function deleteParticularItem(index,listName) {
@@ -296,6 +305,35 @@ function deleteParticularItem(index,listName) {
             extra.splice(index,1);
             updateLocalStorage('Extra');
             renderDomOnLoad('Extra');
+        break
+
+    }
+}
+
+function itemUpdated(index,listName,event) {
+    switch(listName) { 
+        case 'ToBeDone' : 
+            toBeDoneArray[index] = event.path[0].innerHTML;
+            // toBeDoneArray.splice(index, 1);
+            updateLocalStorage('ToBeDone')
+        break
+
+        case 'InProgress' : 
+            inProgress[index] = event.path[0].innerHTML;
+            // inProgress.splice(index,1);
+            updateLocalStorage('InProgress');
+        break
+    
+        case 'Completed' : 
+            completed[index] = event.path[0].innerHTML;
+            // completed.splice(index, 1);
+            updateLocalStorage('Completed');
+        break
+
+        case 'Extra' : 
+            extra[index] = event.path[0].innerHTML;
+            // extra.splice(index,1);
+            updateLocalStorage('Extra');
         break
 
     }
