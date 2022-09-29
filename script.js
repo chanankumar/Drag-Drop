@@ -84,7 +84,13 @@ function renderDomOnLoad (listToBeUpdated) {
             if(toBeDoneArray.length !== 0) {
                 toBeDoneArray.forEach( (value,index) => {
                     var containerForItem = document.createElement('div');
+                    containerForItem.draggable = true;
+                    containerForItem.allowDrop = false;
+                    containerForItem.drop = false;
+                    containerForItem.ondrop=false;
+                    containerForItem.addEventListener("dragstart",(event) => drag(event))
                     containerForItem.classList.add('containerForToBeDone');
+                    containerForItem.setAttribute("id", "tobedoneitem"+index);
                     document.getElementById("containerForToBeDone").appendChild(containerForItem)
                     var item = document.createElement("span");
                     item.innerHTML = value;
@@ -114,7 +120,10 @@ function renderDomOnLoad (listToBeUpdated) {
             if(inProgress.length !== 0) {
                 inProgress.forEach( (value,index) => {
                     var containerForItem = document.createElement('div');
+                    containerForItem.draggable = true;
+                    containerForItem.addEventListener("dragstart",(event) => drag(event))
                     containerForItem.classList.add('containerForInprogress');
+                    containerForItem.setAttribute("id", "inprogress"+index);
                     document.getElementById("containerForInprogress").appendChild(containerForItem)
                     var item = document.createElement("span");
                     item.innerHTML = value;
@@ -145,6 +154,9 @@ function renderDomOnLoad (listToBeUpdated) {
             completed.forEach( (value,index) => {
                 var containerForItem = document.createElement('div');
                 containerForItem.classList.add('containerForCompleted');
+                containerForItem.setAttribute("id", "completed"+index);
+                containerForItem.draggable = true;
+                containerForItem.addEventListener("dragstart",(event) => drag(event))
                 document.getElementById("containerForCompleted").appendChild(containerForItem)
                 var item = document.createElement("span");
                 item.innerHTML = value;
@@ -174,7 +186,10 @@ function renderDomOnLoad (listToBeUpdated) {
             if(extra.length !== 0) {
                 extra.forEach( (value,index) => {
                     var containerForItem = document.createElement('div');
+                    containerForItem.draggable = true;
+                    containerForItem.addEventListener("dragstart",(event) => drag(event))
                     containerForItem.classList.add('containerForExtra');
+                    containerForItem.setAttribute("id", "extra"+index);
                     document.getElementById("containerForExtra").appendChild(containerForItem)
                     var item = document.createElement("span");
                     item.innerHTML = value;
@@ -339,6 +354,41 @@ function itemUpdated(index,listName,event) {
     }
 }
 
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    console.log("fff")
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.append(document.getElementById(data));
+  }
+	
+  $(document).ready(function() {
+    $('#containerForToBeDone').children().on('drop', function() {
+      return false;
+    });
+  });
+  $(document).ready(function() {
+    $('#containerForInprogress').children().on('drop', function() {
+      return false;
+    });
+  });
+  $(document).ready(function() {
+    $('#containerForCompleted').children().on('drop', function() {
+      return false;
+    });
+  });
+  $(document).ready(function() {
+    $('#containerForExtra').children().on('drop', function() {
+      return false;
+    });
+  });
 renderDomOnLoad('ToBeDone');
 renderDomOnLoad('InProgress');
 renderDomOnLoad('Completed');

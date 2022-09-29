@@ -8,29 +8,29 @@
   </head>
 
     <body>
-        <ul id="tobedone" class="tobedone">
+        <ul id="tobedone" class="tobedone" ondrop="drop(event)" ondragover="allowDrop(event)">
             To Be Done
             <div id="containerForToBeDone"> </div>
             <div class="addbutton" id="addItemButton1" onclick="addItem(1)"> + </div>
         </ul>
 
-        <ul id="inprogress" class="inprogress">
+        <ul id="inprogress" class="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
             In Progress
             <div id="containerForInprogress"> </div>
             <div class="addbutton" id="addItemButton2" onclick="addItem(2)"> + </div>
         </ul>
 
-        <ul id="completed" class="completed">
+        <ul id="completed" class="completed" ondrop="drop(event)" ondragover="allowDrop(event)">
             Completed<div id="containerForCompleted"> </div>
             <div class="addbutton" id="addItemButton3" onclick="addItem(3)"> + </div>
         </ul>
 
-        <ul id="extra" class="extra">
+        <ul id="extra" class="extra" ondrop="drop(event)" ondragover="allowDrop(event)">
             Extra
             <div id="containerForExtra"> </div>
             <div class="addbutton" id="addItemButton4" onclick="addItem(4)"> + </div>
         </ul>
-
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <script src="script.js"></script>
     </body>
 </html>
