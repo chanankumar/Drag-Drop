@@ -354,12 +354,62 @@ function itemUpdated(index,listName,event) {
     }
 }
 
+function updateArray (insertInto,insertValue,deleteFrom,deleteIndex) {
+    insertInto = insertInto.replace('containerFor','');
+    switch(insertInto) {
+        case 'ToBeDone' : 
+            toBeDoneArray.push(insertValue);
+            updateLocalStorage('ToBeDone');
+            // document.getElementById(ev.dataTransfer.getData("text")).children[1].setAttribute("id", "tobedoneitem"+toBeDoneArray.length)
+        break;
+
+        case 'Inprogress' : 
+            inProgress.push(insertValue);
+            updateLocalStorage('InProgress')
+            // document.getElementById(ev.dataTransfer.getData("text")).children[1].setAttribute("id", "inprogress"+inProgress.length)
+        break;
+
+        case 'Completed' : 
+            completed.push(insertValue);
+            updateLocalStorage('Completed')
+            // document.getElementById(ev.dataTransfer.getData("text")).children[1].setAttribute("id", "completed"+completed.length)
+        break;
+
+        case 'Extra' : 
+            extra.push(insertValue);
+            updateLocalStorage('Extra')
+            // document.getElementById(ev.dataTransfer.getData("text")).children[1].setAttribute("id", "extra"+extra.length)
+        break;
+    }
+
+    switch(deleteFrom) { 
+        case 'tobedoneitem' : 
+            toBeDoneArray.splice(deleteIndex, 1);
+            updateLocalStorage('ToBeDone')
+        break
+
+        case 'inprogress' : 
+            inProgress.splice(deleteIndex,1);
+            updateLocalStorage('InProgress');
+        break
+    
+        case 'completed' : 
+            completed.splice(deleteIndex, 1);
+            updateLocalStorage('Completed');
+        break
+
+        case 'extra' : 
+            extra.splice(deleteIndex,1);
+            updateLocalStorage('Extra');
+        break
+    }
+}
+
 function allowDrop(ev) {
     ev.preventDefault();
   }
   
   function drag(ev) {
-    console.log("fff")
     ev.dataTransfer.setData("text", ev.target.id);
   }
   
@@ -367,7 +417,17 @@ function allowDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.append(document.getElementById(data));
+    var deleteIndex = ev.dataTransfer.getData("text").replace( /^\D+/g, '');
+    var deleteFrom = ev.dataTransfer.getData("text").replace(/[0-9]/g, '');
+    var insertInto = ev.target.id;
+    var insertValue = document.getElementById(data).children[0].textContent;
+    updateArray(insertInto,insertValue,deleteFrom,deleteIndex)
+    renderDomOnLoad('ToBeDone');
+    renderDomOnLoad('InProgress');
+    renderDomOnLoad('Completed');
+    renderDomOnLoad('Extra');
   }
+
 	
   $(document).ready(function() {
     $('#containerForToBeDone').children().on('drop', function() {
